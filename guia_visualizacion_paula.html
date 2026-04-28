@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Guía de Visualización — Paula</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #F7F3EE;
+    --warm: #EDE5D8;
+    --sand: #D4C4AD;
+    --terracotta: #B5714A;
+    --terracotta-light: #C98B68;
+    --deep: #2C2418;
+    --mid: #5C4A30;
+    --text: #3A2E1E;
+    --muted: #8A7A62;
+    --gold: #C9A96E;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background-color: var(--cream);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    min-height: 100vh;
+    padding: 0;
+  }
+
+  /* HEADER */
+  .header {
+    background: var(--deep);
+    padding: 48px 40px 40px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .header::before {
+    content: '';
+    position: absolute;
+    top: -60px; left: -60px;
+    width: 200px; height: 200px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(201,169,110,0.15) 0%, transparent 70%);
+  }
+  .header::after {
+    content: '';
+    position: absolute;
+    bottom: -40px; right: -40px;
+    width: 160px; height: 160px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(181,113,74,0.12) 0%, transparent 70%);
+  }
+  .header-tag {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 16px;
+    opacity: 0.8;
+  }
+  .header h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 42px;
+    font-weight: 300;
+    color: var(--cream);
+    line-height: 1.15;
+    margin-bottom: 12px;
+  }
+  .header h1 em {
+    font-style: italic;
+    color: var(--gold);
+  }
+  .header-sub {
+    font-size: 13px;
+    color: var(--sand);
+    letter-spacing: 0.5px;
+    opacity: 0.7;
+  }
+
+  /* INTRO CARD */
+  .intro-card {
+    background: var(--warm);
+    margin: 32px 24px;
+    border-radius: 16px;
+    padding: 28px 28px;
+    border-left: 3px solid var(--gold);
+  }
+  .intro-card p {
+    font-size: 14px;
+    line-height: 1.8;
+    color: var(--mid);
+  }
+  .intro-card strong {
+    color: var(--terracotta);
+    font-weight: 500;
+  }
+
+  /* NAVIGATION */
+  .nav {
+    display: flex;
+    gap: 6px;
+    padding: 0 24px;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+  }
+  .nav-btn {
+    flex: 1;
+    min-width: 140px;
+    padding: 12px 16px;
+    background: white;
+    border: 1.5px solid var(--sand);
+    border-radius: 10px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    font-weight: 400;
+    color: var(--muted);
+    cursor: pointer;
+    transition: all 0.25s ease;
+    text-align: center;
+    letter-spacing: 0.3px;
+  }
+  .nav-btn.active {
+    background: var(--deep);
+    border-color: var(--deep);
+    color: var(--cream);
+  }
+  .nav-btn:hover:not(.active) {
+    border-color: var(--terracotta);
+    color: var(--terracotta);
+  }
+  .nav-num {
+    display: block;
+    font-size: 9px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    opacity: 0.6;
+    margin-bottom: 4px;
+  }
+
+  /* SECTION */
+  .section {
+    display: none;
+    padding: 0 24px 48px;
+    animation: fadeIn 0.4s ease;
+  }
+  .section.visible { display: block; }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* PROTOCOL CARD */
+  .protocol-header {
+    text-align: center;
+    padding: 32px 0 24px;
+  }
+  .protocol-header .p-tag {
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--terracotta);
+    margin-bottom: 10px;
+  }
+  .protocol-header h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 30px;
+    font-weight: 300;
+    color: var(--deep);
+    line-height: 1.2;
+  }
+  .protocol-header h2 em {
+    font-style: italic;
+    color: var(--terracotta-light);
+  }
+  .protocol-header .p-desc {
+    font-size: 13px;
+    color: var(--muted);
+    margin-top: 10px;
+    line-height: 1.7;
+    max-width: 420px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  /* STEPS */
+  .steps-container { margin-top: 8px; }
+
+  .step {
+    background: white;
+    border-radius: 14px;
+    margin-bottom: 12px;
+    overflow: hidden;
+    border: 1px solid rgba(212,196,173,0.4);
+    box-shadow: 0 2px 12px rgba(44,36,24,0.04);
+  }
+  .step-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 18px 20px;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .step-header:hover { background: var(--cream); }
+  .step-num {
+    width: 32px; height: 32px;
+    background: var(--deep);
+    color: var(--cream);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px;
+    font-weight: 500;
+    flex-shrink: 0;
+  }
+  .step-title {
+    flex: 1;
+  }
+  .step-title strong {
+    display: block;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--deep);
+    margin-bottom: 2px;
+  }
+  .step-title span {
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.5px;
+  }
+  .step-toggle {
+    font-size: 18px;
+    color: var(--sand);
+    transition: transform 0.25s;
+  }
+  .step.open .step-toggle { transform: rotate(45deg); color: var(--terracotta); }
+
+  .step-body {
+    display: none;
+    padding: 0 20px 20px 66px;
+    border-top: 1px solid var(--warm);
+  }
+  .step.open .step-body { display: block; }
+
+  .step-body p {
+    font-size: 13.5px;
+    line-height: 1.85;
+    color: var(--mid);
+    margin-bottom: 12px;
+  }
+  .step-body p:last-child { margin-bottom: 0; }
+  .step-body em { color: var(--terracotta-light); font-style: italic; }
+  .step-body strong { color: var(--deep); font-weight: 500; }
+
+  .quote-block {
+    background: var(--warm);
+    border-left: 2px solid var(--gold);
+    padding: 14px 16px;
+    border-radius: 0 8px 8px 0;
+    margin: 12px 0;
+  }
+  .quote-block p {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 15px;
+    font-style: italic;
+    color: var(--deep);
+    line-height: 1.7;
+    margin: 0;
+  }
+
+  .timer-badge {
+    display: inline-block;
+    background: var(--deep);
+    color: var(--gold);
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    padding: 4px 10px;
+    border-radius: 20px;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    font-weight: 500;
+  }
+
+  /* WEEKLY SCHEDULE */
+  .week-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 8px;
+    margin: 16px 0;
+  }
+  .day-card {
+    background: white;
+    border-radius: 10px;
+    padding: 12px 8px;
+    text-align: center;
+    border: 1px solid var(--warm);
+  }
+  .day-card .d-name {
+    font-size: 9px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 6px;
+  }
+  .day-card .d-type {
+    font-size: 10px;
+    font-weight: 500;
+    color: var(--terracotta);
+    line-height: 1.4;
+  }
+  .day-card.d1 { border-top: 3px solid #B5714A; }
+  .day-card.d2 { border-top: 3px solid #5C7A6B; }
+  .day-card.d3 { border-top: 3px solid #6B7A9E; }
+  .day-card.d4 { border-top: 3px solid #B5714A; }
+  .day-card.d5 { border-top: 3px solid #5C7A6B; }
+  .day-card.d6 { border-top: 3px solid #6B7A9E; }
+  .day-card.d7 { border-top: 3px solid #C9A96E; }
+  .d7 .d-type { color: var(--gold); }
+
+  /* ANCHOR SECTION */
+  .anchor-box {
+    background: var(--deep);
+    border-radius: 14px;
+    padding: 24px;
+    margin-bottom: 14px;
+  }
+  .anchor-box .a-tag {
+    font-size: 9px;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 10px;
+  }
+  .anchor-box p {
+    font-size: 13.5px;
+    color: var(--sand);
+    line-height: 1.85;
+  }
+  .anchor-box strong { color: var(--cream); font-weight: 500; }
+
+  /* FOOTER */
+  .footer {
+    text-align: center;
+    padding: 40px 24px;
+    border-top: 1px solid var(--warm);
+    margin-top: 8px;
+  }
+  .footer p {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 16px;
+    font-style: italic;
+    color: var(--muted);
+    line-height: 1.7;
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 600px) {
+    .header h1 { font-size: 30px; }
+    .week-grid { grid-template-columns: repeat(4, 1fr); }
+    .step-body { padding-left: 20px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-tag">Guía Personal · Quantum Leap</div>
+  <h1>Visualización<br><em>con intención</em></h1>
+  <div class="header-sub">10 minutos cada mañana · Basada en Transurfing + Neurociencia</div>
+</div>
+
+<div class="intro-card">
+  <p>
+    En Transurfing, la línea de vida donde ya eres libre, ya tienes tu startup, ya vives en ese departamento en Surco con tu pareja, <strong>ya existe</strong>. No la estás construyendo — te estás <em>deslizando</em> hacia ella. Lo que te aleja de esa línea no es falta de esfuerzo: es el exceso de importancia. La ansiedad que sientes cuando lavas los platos pensando "todavía no llegué" — eso es importancia excesiva, y el espacio de variantes te la devuelve como resistencia.<br><br>
+    Esta guía no es para motivarte. Es para <strong>entrenar tu sistema nervioso</strong> a reconocer esa línea como su estado natural.
+  </p>
+</div>
+
+<!-- NAV -->
+<div class="nav">
+  <button class="nav-btn active" onclick="showSection('protocolo')">
+    <span class="nav-num">Protocolo</span>
+    10 minutos diarios
+  </button>
+  <button class="nav-btn" onclick="showSection('emocional')">
+    <span class="nav-num">Tipo 1</span>
+    Activación emocional
+  </button>
+  <button class="nav-btn" onclick="showSection('resiliencia')">
+    <span class="nav-num">Tipo 2</span>
+    Resiliencia
+  </button>
+  <button class="nav-btn" onclick="showSection('identidad')">
+    <span class="nav-num">Tipo 3</span>
+    Cambio de identidad
+  </button>
+  <button class="nav-btn" onclick="showSection('anclajes')">
+    <span class="nav-num">Extra</span>
+    Anclajes del día
+  </button>
+</div>
+
+<!-- ===== PROTOCOLO ===== -->
+<div class="section visible" id="section-protocolo">
+
+  <div class="protocol-header">
+    <div class="p-tag">Estructura base</div>
+    <h2>Tu protocolo de<br><em>10 minutos</em></h2>
+    <div class="p-desc">Cada mañana, antes de revisar el teléfono. El orden importa — empieza siempre con el cuerpo antes de la mente.</div>
+  </div>
+
+  <div class="steps-container">
+
+    <div class="step">
+      <div class="step-header" onclick="toggleStep(this)">
+        <div class="step-num">1</div>
+        <div class="step-title">
+          <strong>Aterrizaje y respiración</strong>
+          <span>2 minutos · Antes de todo</span>
+        </div>
+        <div class="step-toggle">+</div>
+      </div>
+      <div class="step-body">
+        <div class="timer-badge">⏱ 2 minutos</div>
+        <p>Tendida o sentada, ojos cerrados. Coloca una mano en el pecho y otra en el vientre. <strong>Respira en 4 tiempos, retén 4, exhala 6.</strong> Repite 4 veces.</p>
+        <p>Mientras respiras, di internamente: <em>"Estoy aquí. Estoy a salvo. Hoy me deslizo."</em></p>
+        <p>Esto no es opcional — le indica al sistema nervioso que no hay amenaza. Sin esto, visualizas desde la ansiedad y refuerzas la línea equivocada.</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-header" onclick="toggleStep(this)">
+        <div class="step-num">2</div>
+        <div class="step-title">
+          <strong>Visualización del día (rotación)</strong>
+          <span>6 minutos · El núcleo</span>
+        </div>
+        <div class="step-toggle">+</div>
+      </div>
+      <div class="step-body">
+        <div class="timer-badge">⏱ 6 minutos</div>
+        <p>Usa la guía semanal de abajo. Cada día tiene asignado un tipo de visualización distinto. En las secciones del menú superior encontrarás el script completo para cada tipo.</p>
+
+        <div class="week-grid">
+          <div class="day-card d1"><div class="d-name">Lun</div><div class="d-type">Emocional</div></div>
+          <div class="day-card d2"><div class="d-name">Mar</div><div class="d-type">Resiliencia</div></div>
+          <div class="day-card d3"><div class="d-name">Mié</div><div class="d-type">Identidad</div></div>
+          <div class="day-card d4"><div class="d-name">Jue</div><div class="d-type">Emocional</div></div>
+          <div class="day-card d5"><div class="d-name">Vie</div><div class="d-type">Resiliencia</div></div>
+          <div class="day-card d6"><div class="d-name">Sáb</div><div class="d-type">Identidad</div></div>
+          <div class="day-card d7"><div class="d-name">Dom</div><div class="d-type">La que más costó</div></div>
+        </div>
+
+        <p>El domingo repites la visualización que sintiste menos real o más difícil esa semana. Eso es tu punto de crecimiento.</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-header" onclick="toggleStep(this)">
+        <div class="step-num">3</div>
+        <div class="step-title">
+          <strong>Intención del día</strong>
+          <span>2 minutos · Cierre</span>
+        </div>
+        <div class="step-toggle">+</div>
+      </div>
+      <div class="step-body">
+        <div class="timer-badge">⏱ 2 minutos</div>
+        <p>Abre los ojos lentamente. Escribe — aunque sea en el celular — <strong>una sola frase</strong> en presente que describa quién eres hoy:</p>
+        <div class="quote-block"><p>"Soy una fundadora que avanza con calma. Hoy hago outreach a [nombre]."</p></div>
+        <div class="quote-block"><p>"Soy la versión de Paula que ya confía en su producto. Hoy lo muestro."</p></div>
+        <p>No es afirmación vacía — es una instrucción al sistema de activación reticular de tu cerebro sobre qué evidencia buscar durante el día.</p>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ===== EMOCIONAL ===== -->
+<div class="section" id="section-emocional">
+
+  <div class="protocol-header">
+    <div class="p-tag">Tipo 1 · Lunes y Jueves</div>
+    <h2>Visualización de<br><em>activación emocional</em></h2>
+    <div class="p-desc">No imagines el resultado — siente el estado interno de quien ya llegó. El cerebro aprende por emoción, no por lógica.</div>
+  </div>
+
+  <div class="steps-container">
+
+    <div class="step">
+      <div class="step-header" onclick="toggleStep(this)">
+        <div class="step-num">A</div>
+        <div class="step-title">
+          <strong>Fase 1 — Tu primer cliente firmado</strong>
+          <span>La emoción de lo oficial</span>
+        </div>
+        <div class="step-toggle">+</div>
+      </div>
+      <div class="step-body">
+        <p>Cierra los ojos. Estás sentada frente a tu computadora — o frente a la persona. Acabas de recibir la confirmación. El contrato está firmado.</p>
+        <p><strong>¿Qué sientes exactamente en el pecho?</strong> Identifica la sensación física antes que el pensamiento. ¿Es calor? ¿Ligereza? ¿Un alivio que sube desde el estómago?</p>
+        <p>Ahora lleva esa sensación a los pulmones. Inhálala. Que tu cuerpo la recuerde como real.</p>
+        <div class="quote-block"><p>No estás simulando alegría. Estás dejando que el cuerpo recuerde que este momento ya existe en el espacio de variantes.</p></div>
+        <p>Si puedes, emite el sonido — interno o externo — que harías en ese momento. No el "sí" racional. El sonido real, visceral, de cuando algo se vuelve tuyo.</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-header" onclick="toggleStep(this)">
+        <div class="step-num">B</div>
+        <div class="step-title">
+          <strong>Fase 2 — El departamento, el tiempo libre, el amor</strong>
+          <span>La emoción de la paz elegida</span>
+        </div>
+        <div class="step-toggle">+</div>
+      </div>
+      <div class="step-body">
+        <p>Ahora ve al departamento. San Borja o Surco — el que ya viste en tu mente. <strong>Involucra todos los sentidos:</strong></p>
+        <p>¿Cómo huele esa mañana? ¿Hay luz natural? ¿Cómo es la temperatura? ¿Dónde está tu pareja? ¿Qué sonido hay de fondo — silencio, música, la ciudad afuera?</p>
+        <p>Estás tomando café o lo que tomes. No tienes urgencia. No hay nada que debas hacer ahora mismo que no hayas elegido hacer.</p>
+        <div class="quote-block"><p>Esa sensación — elegir cómo pasar tu tiempo — es la emoción ancla. Memorízala en el cuerpo.</p></div>
+        <p>Recorre físicamente esa libertad: abrir el calendario y ver que puedes bloquear la mañana. Agendar un viaje sin pedir permiso. Llamar a tu mamá a las 11am porque puedes.</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-header" onclick="toggleStep(this)">
+        <div class="step-num">C</div>
+        <div class="step-title">
+          <strong>Nota Transurfing — Importancia y desapego</strong>
+          <span>Leer después de la visualización</span>
+        </div>
+        <div class="step-toggle">+</div>
+      </div>
+      <div class="step-body">
+        <p>La ansiedad cuando lavas los platos no es motivación — es importancia excesiva. Le estás asignando a "llegar" tanto peso que el universo te lo devuelve como resistencia.</p>
+        <p><strong>Esta visualización no es para darte urgencia. Es para lo opuesto:</strong> entrenar al sistema nervioso a que ese futuro se sienta tan real y tan tuyo, que puedas lavar los platos con paz porque sabes que ya está en camino.</p>
+        <div class="quote-block"><p>"El que quiere demasiado, no recibe. El que sabe que recibirá, actúa con ligereza."</p></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ===== RESILIENCIA ===== -->
+<div class="section" id="section-resiliencia">
+
+  <div class="protocol-header">
+    <div class="p-tag">Tipo 2 · Martes y Viernes</div>
+    <h2>Visualización de<br><em>resiliencia</em></h2>
+    <div class="p-desc">Tu área premotora no distingue simulación de realidad. Cada vez que te ves manejando una situación difícil, estás literalmente entrenando ese circuito.</div>
+  </div>
+
+  <div class="steps-container">
+
+    <div class="step">
+      <div class="step-header" onclick="toggleStep(this)">
+        <div class="step-num">A</div>
+        <div class="step-title">
+          <strong>Escenario 1 — Frente a la sala de gerentes</strong>
+          <span>Tu disparador principal</span>
+        </div>
+        <div class="step-toggle">+</div>
+      </div>
+      <div class="step-body">
+        <p>Visualízate entrando a la sala. Proyector encendido. Caras serias. El silencio antes de que empieces.</p>
+        <p>Ahora obsérva a <strong>la versión de Paula que ya es Key Person of Influence</strong>. ¿Cómo respira? ¿Dónde está su peso corporal? ¿Qué hace con las manos? No está actuando confianza — la tiene porque ya sabe que su producto vale.</p>
+        <p>Esa Paula empieza a hablar. Su voz es pareja, no acelerada. Cuando alguien la interrumpe o pregunta difícil, hace una pausa real — no nerviosa, sino deliberada.</p>
+        <div class="quote-block"><p>Visualiza la incomodidad. No la evites. Entrena el cerebro a que "incomodidad" ya no dispara alarma — dispara presencia.</p></div>
+        <p>Termina la presentación. Ve cómo se siente al final — no euforia falsa, sino algo más sólido: <em>hice lo que vine a hacer.</em></p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-header" onclick="toggleStep(this)">
+        <div class="step-num">B</div>
+        <div class="step-title">
+          <strong>Escenario 2 — El outreach que no haces</strong>
+          <span>Tu patrón de inconsistencia</span>
+        </div>
+        <div class="step-toggle">+</div>
+      </div>
+      <div class="step-body">
+        <p>Visualízate abriendo LinkedIn o el correo para escribir a un prospecto. Sientes la resistencia — el "¿y si dicen que no?", el "¿y si mi producto no es suficiente?"</p>
+        <p><strong>No saltes ese momento. Quédate en él.</strong> Observa cómo la Paula que ya llegó lo vive: siente la resistencia igual, pero no le asigna significado de peligro.</p>
+        <p>La ves escribir el mensaje. Sin perfeccionarlo cuatro veces. Sin esperar el momento ideal. Lo envía. Y vuelve a lo que estaba haciendo con la misma energía.</p>
+        <div class="quote-block"><p>La consistencia no viene de la motivación — viene de desensibilizar la amenaza percibida. Eso es exactamente lo que estás haciendo aquí.</p></div>
+        <p>Visualiza esto 3 veces seguidas en los 6 minutos. La repetición es el punto.</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-header" onclick="toggleStep(this)">
+        <div class="step-num">C</div>
+        <div class="step-title">
+          <strong>Escenario 3 — Los platos y la paz</strong>
+          <span>Opcional, cuando la urgencia esté alta</span>
+        </div>
+        <div class="step-toggle">+</div>
+      </div>
+      <div class="step-body">
+        <p>Este es para los días en que el pensamiento "estoy perdiendo tiempo" aparece durante tareas repetitivas.</p>
+        <p>Visualízate lavando los platos — o lo que sea. Y ahora visualiza que la Paula del futuro también a veces lava platos. Porque tiene vida, no solo startup.</p>
+        <p><strong>La diferencia no es que dejó de hacer cosas pequeñas. Es que las hace sin que le cuesten nada internamente.</strong></p>
+        <div class="quote-block"><p>El objetivo no es escapar de los platos. Es que los platos dejen de disparar la alarma de "estoy fallando".</p></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ===== IDENTIDAD ===== -->
+<div class="section" id="section-identidad">
+
+  <div class="protocol-header">
+    <div class="p-tag">Tipo 3 · Miércoles y Sábado</div>
+    <h2>Visualización de<br><em>cambio de identidad</em></h2>
+    <div class="p-desc">Tu default mode network determina quién crees que eres cuando no estás haciendo nada. Esta visualización reprograma ese modo predeterminado.</div>
+  </div>
+
+  <div class="steps-container">
+
+    <div class="step">
+      <div class="step-header" onclick="toggleStep(this)">
+        <div class="step-num">A</div>
+        <div class="step-title">
+          <strong>Observa a tu yo futuro</strong>
+          <span>Sin fusionarte todavía</span>
+        </div>
+        <div class="step-toggle">+</div>
+      </div>
+      <div class="step-body">
+        <p>Imagínala como si la vieras desde afuera — la Paula Key Person of Influence, fundadora con equipo, viviendo en ese depa con su pareja, libre.</p>
+        <p>No te centres en lo que tiene. Céntrate en <strong>cómo es su energía</strong>:</p>
+        <p>¿Cómo camina? ¿Cómo toma decisiones — con qué velocidad, con qué certeza? ¿Cómo habla de su trabajo cuando alguien le pregunta? ¿Qué hace cuando algo no sale — cómo procesa y sigue?</p>
+        <p>¿Qué hace por las mañanas que la Paula de hoy no hace? ¿Qué dejó de hacer que la Paula de hoy todavía carga?</p>
+        <div class="quote-block"><p>No es una versión perfecta. Es la misma Paula, con los mismos miedos — pero con una relación distinta con ellos.</p></div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-header" onclick="toggleStep(this)">
+        <div class="step-num">B</div>
+        <div class="step-title">
+          <strong>La fusión</strong>
+          <span>El núcleo de esta visualización</span>
+        </div>
+        <div class="step-toggle">+</div>
+      </div>
+      <div class="step-body">
+        <p>Ahora acércate a ella. La observas de frente. Hay un momento en que los ojos se encuentran — y en ese momento, das un paso hacia adelante y <strong>te fundes con ella</strong>.</p>
+        <p>Ya no la estás mirando. Eres tú. Ves desde sus ojos. Sientes desde su cuerpo. Tienes su historia interna — la que incluye haber llegado aquí, haber dudado y seguido igual.</p>
+        <p>Quédate en ese estado al menos 2 minutos. No hagas nada especial. Solo <em>sé</em> esa versión. Respira desde ahí. Abre los ojos desde ahí.</p>
+        <div class="quote-block"><p>En Transurfing: no imitas el slide, lo vives. No finges ser quien quieres ser — reconoces que ya eres esa persona en otra línea, y dejas que esa línea te encuentre.</p></div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-header" onclick="toggleStep(this)">
+        <div class="step-num">C</div>
+        <div class="step-title">
+          <strong>Sobre ir sola — La reencuadre necesaria</strong>
+          <span>Para integrar después de la fusión</span>
+        </div>
+        <div class="step-toggle">+</div>
+      </div>
+      <div class="step-body">
+        <p>La Paula que ya llegó: ¿la ves como alguien que falló porque empezó sola, o como alguien que <strong>tuvo el valor poco común de comenzar sin red</strong>?</p>
+        <p>Hay startups que arrancan con dos personas porque ninguna de las dos tendría el coraje sola. Tú tienes ese coraje sola. Eso no es un déficit del que presumir — es el punto de partida de tu historia, que eventualmente incluirá a otros.</p>
+        <p><strong>El equipo vendrá cuando el proyecto haya probado que vale.</strong> Y lo está probando ahora, con tu primer piloto comercial.</p>
+        <div class="quote-block"><p>La Paula del futuro no encontró a alguien que se subiera al barco antes de que el barco existiera. Construyó el barco y después llegaron los que querían navegar.</p></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ===== ANCLAJES ===== -->
+<div class="section" id="section-anclajes">
+
+  <div class="protocol-header">
+    <div class="p-tag">Para el resto del día</div>
+    <h2>Anclajes y<br><em>puntos de retorno</em></h2>
+    <div class="p-desc">La visualización matutina entrena el circuito. Estos anclajes evitan que el día lo borre.</div>
+  </div>
+
+  <div class="anchor-box">
+    <div class="a-tag">Cuando laves platos, cocines, hagas algo repetitivo</div>
+    <p>Pon una mano en el pecho por un segundo. Di internamente: <strong>"Esto también es parte del camino. Ya estoy en la línea correcta."</strong><br><br>No para convencerte — para cortocircuitar el pensamiento de urgencia antes de que tome velocidad.</p>
+  </div>
+
+  <div class="anchor-box">
+    <div class="a-tag">Antes de escribir un mensaje de outreach</div>
+    <p>3 segundos. Recuerda la imagen de la Paula del escenario de resiliencia: la que envía sin perfeccionarlo. Luego escribe. No después — ahora.</p>
+  </div>
+
+  <div class="anchor-box">
+    <div class="a-tag">Cuando te compares con startups de dos fundadores</div>
+    <p>La comparación viene de un péndulo — en Transurfing, los péndulos se alimentan de tu energía emocional. <strong>Negar esa energía es retirarte del péndulo.</strong> No necesitas rebatir el pensamiento. Solo reconócelo: <em>"Ahí está el péndulo. No me subo."</em></p>
+  </div>
+
+  <div class="anchor-box">
+    <div class="a-tag">Al final del día — 2 minutos</div>
+    <p>Una sola pregunta: <strong>¿En qué momento del día fui la versión de Paula que ya llegó?</strong> Aunque sea un instante. Eso es evidencia real para el cerebro de que esa identidad existe hoy, no solo en el futuro.</p>
+  </div>
+
+  <div style="height: 20px;"></div>
+
+  <div class="step">
+    <div class="step-header" onclick="toggleStep(this)">
+      <div class="step-num">!</div>
+      <div class="step-title">
+        <strong>La regla de los primeros 21 días</strong>
+        <span>Leer una vez, recordar siempre</span>
+      </div>
+      <div class="step-toggle">+</div>
+    </div>
+    <div class="step-body">
+      <p>Los primeros días la visualización puede sentirse forzada o artificial. Eso es normal — literalmente estás construyendo nuevas vías neuronales.</p>
+      <p><strong>El criterio para saber si está funcionando no es sentirte motivada.</strong> Es notar que ciertas cosas que antes disparaban ansiedad, ahora las manejas un poco más despacio — con una pausa entre el estímulo y la reacción.</p>
+      <p>Si un día no lo hiciste: no te pongas en deuda. Solo vuelves mañana. La consistencia en Transurfing no se trata de perfección — se trata de que el intento sostenido acumula intención exterior.</p>
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">
+  <p>"No estás construyendo una vida nueva.<br>Te estás deslizando hacia la que ya existe."</p>
+</div>
+
+<script>
+  function showSection(id) {
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('visible'));
+    document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('section-' + id).classList.add('visible');
+    event.currentTarget.classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function toggleStep(header) {
+    const step = header.parentElement;
+    step.classList.toggle('open');
+  }
+</script>
+</body>
+</html>
